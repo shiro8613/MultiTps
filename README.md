@@ -1,0 +1,8 @@
+# MultiTps
+MultiPaper環境で各ノードのtpsを表示できるようにします。
+
+MultiPaper環境で各ノードのtpsとmsptを見れるようにします。
+
+MultiLibがString型しか送れないため意味の分からない処理になっています！ぜひプルリクしてね♡
+
+※23/08/02現在ではmsptの計算方法がわからないためmsptは実装されていません。
