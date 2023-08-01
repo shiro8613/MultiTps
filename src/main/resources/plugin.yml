@@ -1,0 +1,9 @@
+name: MultiTps
+version: '${project.version}'
+main: dev.shiro8613.multitps.MultiTps
+api-version: '1.20'
+commands:
+  tps:
+    permission: "multiTps.tps"
+  mstp:
+    permission: "multiTps.mstp"
