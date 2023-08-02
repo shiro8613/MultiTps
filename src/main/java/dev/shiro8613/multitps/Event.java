@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 public class Event implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCommand(PlayerCommandPreprocessEvent event) {
-        if (event.getMessage().toLowerCase().startsWith("/tps")) {
+        if (event.getMessage().toLowerCase().equalsIgnoreCase("/tps")) {
             event.setCancelled(true);
             TPS.getTPS(event.getPlayer());
         }
