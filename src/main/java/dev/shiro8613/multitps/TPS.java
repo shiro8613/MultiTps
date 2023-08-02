@@ -20,12 +20,12 @@ public class TPS {
     private static final String MESSAGE_CHANNEL = "multitps:msg";
     private static final String REPLAY_CHANNEL = "multitps:replay";
 
-    private static List<String> tpses;
+    private static Map<String,String> tpses;
     private static List<String> msptes;
 
 
     public static void Init(JavaPlugin plugin) {
-        tpses =  new ArrayList<>();
+        tpses =  new HashMap<String,String>();
         MultiLib.onString(plugin, MESSAGE_CHANNEL, (data, replay) -> {
             String sendData = getTpsData(plugin, data);
             replay.accept(REPLAY_CHANNEL, sendData);
@@ -33,10 +33,10 @@ public class TPS {
 
         MultiLib.onString(plugin, REPLAY_CHANNEL, TPS::setTpsData);
 
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+        plugin.getServer().getScheduler().runTaskTimer(plugin, () -> {
             setTpsData(getTpsData(plugin, "tps"));
             MultiLib.notify(MESSAGE_CHANNEL, "tps");
-        }, 1);
+        }, 0, 1);
 
         Initialized = true;
     }
@@ -46,7 +46,9 @@ public class TPS {
         player.sendMessage("-----------------------------------------");
         player.sendMessage("[serverName] 1m / 5m / 15m / average");
         if (tpses.size() > 0) {
-            coloredTps(tpses).forEach(player::sendMessage);
+            List<String> t = tpses.values().stream()
+                                    .sorted().toList();
+            coloredTps(t).forEach(player::sendMessage);
         } else {
             player.sendMessage("------NoData------");
         }
@@ -108,7 +110,7 @@ public class TPS {
 
         switch (Data[1]) {
             case "tps": {
-                tpses.add(Data[0] + ":" + Data[2]);
+                tpses.put(Data[0] ,Data[0] + ":" + Data[2]);
                 break;
             }
             case "mspt": {
